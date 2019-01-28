@@ -95,9 +95,10 @@ from seahub.api2.endpoints.dtable import WorkspacesView, DTableView, DTablesView
 from seahub.api2.endpoints.dtable_share import SharedDTablesView, DTableShareView
 from seahub.api2.endpoints.dtable_related_users import DTableRelatedUsersView
 from seahub.api2.endpoints.recent_added_files import RecentAddedFilesView
-
+from seahub.api2.endpoints.illegal_reports import IllegalReportsView
 
 # Admin
+from seahub.api2.endpoints.admin.illegal_reports import AdminIllegalReportsView, AdminIllegalReportView
 from seahub.api2.endpoints.admin.revision_tag import AdminTaggedItemsView
 from seahub.api2.endpoints.admin.login_logs import LoginLogs, AdminLoginLogs
 from seahub.api2.endpoints.admin.file_audit import FileAudit
@@ -443,6 +444,16 @@ urlpatterns = [
 
     # admin: activities
     url(r'^api/v2.1/admin/user-activities/$', UserActivitiesView.as_view(), name='api-v2.1-admin-user-activity'),
+
+    ## user::illegal-report
+    # user report an illegal file
+    url(r'^api/v2.1/illegal-reports/$', IllegalReportsView.as_view(), name='api-v2.1-illegal-reports'),
+
+    ## admin::illegal-reports
+    # admin get all illegal reports
+    url(r'^api/v2.1/admin/illegal-reports/$', AdminIllegalReportsView.as_view(), name='api-v2.1-admin-illegal-reports'),
+    url(r'^api/v2.1/admin/illegal-reports/(?P<pk>\d+)/$', AdminIllegalReportView.as_view(), name='api-v2.1-admin-illegal-report'),
+
 
     ## admin::sysinfo
     url(r'^api/v2.1/admin/sysinfo/$', SysInfo.as_view(), name='api-v2.1-sysinfo'),

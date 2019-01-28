@@ -255,6 +255,7 @@ INSTALLED_APPS = (
     'seahub.work_weixin',
     'seahub.dtable',
     'seahub.file_participants',
+    'seahub.illegal_reports',
 )
 
 # Enable or disable view File Scan
