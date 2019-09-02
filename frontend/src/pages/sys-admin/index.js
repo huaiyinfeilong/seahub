@@ -10,6 +10,9 @@ import Info from './info';
 import DesktopDevices from './devices/desktop-devices';
 import MobileDevices from './devices/mobile-devices';
 import DeviceErrors from './devices/devices-errors';
+import UsersAll from './users/users-all';
+import UsersAdmin from './users/users-admin';
+import UserInfo from './users/user-info';
 
 import AllRepos from './repos/all-repos';
 import SystemRepo from './repos/system-repo';
@@ -99,6 +102,9 @@ class SysAdmin extends React.Component {
             <TrashRepos path={siteRoot + 'sys/trash-libraries'} />
             <DirView path={siteRoot + 'sys/libraries/:repoID/*'} />
             <WebSettings path={siteRoot + 'sys/web-settings'} />
+            <UsersAll path={siteRoot + 'sys/users-all'} />
+            <UsersAdmin path={siteRoot + 'sys/users-admin'} />
+            <UserInfo path={siteRoot + 'sys/user-info/:email'} />
             <FileScanRecords
               path={siteRoot + 'sys/file-scan-records'}
               currentTab={currentTab} 
