@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from '@reach/router';
 import { siteRoot } from '../../utils/constants';
@@ -10,6 +10,7 @@ import Info from './info';
 import DesktopDevices from './devices/desktop-devices';
 import MobileDevices from './devices/mobile-devices';
 import DeviceErrors from './devices/devices-errors';
+import OrgsAll from './orgs/orgs-all';
 
 import '../../assets/css/fa-solid.css';
 import '../../assets/css/fa-regular.css';
@@ -53,13 +54,14 @@ class SysAdmin extends React.Component {
   }
 
   tabItemClick = (param) => {
-    this.setState({currentTab: param});          
+    this.setState({currentTab: param});
   }  
 
   render() {
     let { currentTab, isSidePanelClosed } = this.state;
 
     return (
+
       <div id="main">
         <SidePanel
           isSidePanelClosed={isSidePanelClosed}
@@ -73,6 +75,7 @@ class SysAdmin extends React.Component {
             <DesktopDevices path={siteRoot + 'sys/desktop-devices'} />
             <MobileDevices path={siteRoot + 'sys/mobile-devices'} />
             <DeviceErrors path={siteRoot + 'sys/device-errors'} />
+            <OrgsAll path={siteRoot + 'sys/organizations-all'} />
             <FileScanRecords
               path={siteRoot + 'sys/file-scan-records'}
               currentTab={currentTab} 

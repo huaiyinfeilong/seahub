@@ -653,6 +653,12 @@ urlpatterns = [
     url(r'^sys/mobile-devices/$', sysadmin_react_fake_view, name="sys_mobile_devices"),
     url(r'^sys/device-errors/$', sysadmin_react_fake_view, name="sys_device_errors"),
     url(r'^sys/web-settings/$', sysadmin_react_fake_view, name="sys_web_settings"),
+    url(r'^sys/organizations-all/$', sysadmin_react_fake_view, name="sys_organizations_all"),
+    url(r'^sys/organization/(?P<org_id>\d+)/users/$', sysadmin_org_react_fake_view, name="sys_organization_users"),
+    url(r'^sys/organization/(?P<org_id>\d+)/groups/$', sysadmin_org_react_fake_view, name="sys_organization_groups"),
+    url(r'^sys/organization/(?P<org_id>\d+)/libraries/$', sysadmin_org_react_fake_view, name="sys_organization_repos"),
+    url(r'^sys/organization/(?P<org_id>\d+)/settings/$', sysadmin_org_react_fake_view, name="sys_organization_settings"),
+
     url(r'^sys/work-weixin/$', sysadmin_react_fake_view, name="sys_work_weixin"),
 
     url(r'^client-login/$', client_token_login, name='client_token_login'),
