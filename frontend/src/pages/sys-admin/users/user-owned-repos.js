@@ -205,7 +205,7 @@ class UserOwnedRepos extends Component {
   }
 
   transferRepo = (receiverEmail, repoID) => {
-    seafileAPI.sysAdminTransferRepo(receiverEmail, repoID).then(res => {
+    seafileAPI.sysAdminTransferRepo(repoID, receiverEmail).then(res => {
       let newRepoList = this.state.repoList.filter(repo => {
         return repo.id != repoID;
       });

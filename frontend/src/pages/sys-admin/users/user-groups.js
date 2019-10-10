@@ -136,7 +136,7 @@ class UserGroups extends Component {
   }
 
   componentDidMount () {
-    seafileAPI.sysAdminListAllRepoJoinedByUser(this.props.email).then(res => {
+    seafileAPI.sysAdminListAllGroupsJoinedByUser(this.props.email).then(res => {
       this.setState({
         groupList: res.data,
         loading: false
