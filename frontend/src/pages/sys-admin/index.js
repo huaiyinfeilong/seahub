@@ -10,14 +10,15 @@ import Info from './info';
 import DesktopDevices from './devices/desktop-devices';
 import MobileDevices from './devices/mobile-devices';
 import DeviceErrors from './devices/devices-errors';
-import Groups from './groups/groups';
-import GroupRepos from './groups/group-repos';
-import GroupMembers from './groups/group-members';
 
 import AllRepos from './repos/all-repos';
 import SystemRepo from './repos/system-repo';
 import TrashRepos from './repos/trash-repos';
 import DirView from './repos/dir-view';
+
+import Groups from './groups/groups';
+import GroupRepos from './groups/group-repos';
+import GroupMembers from './groups/group-members';
 
 import WebSettings from './web-settings/web-settings';
 import FileScanRecords from './file-scan-records';
@@ -50,6 +51,10 @@ class SysAdmin extends React.Component {
       {
         tab: 'libraries',
         urlPartList: ['all-libraries', 'system-library', 'trash-libraries', 'libraries/']
+      },
+      {
+        tab: 'groups',
+        urlPartList: ['groups/']
       },
     ];
     const tmpTab = this.getCurrentTabForPageList(pageList);
@@ -103,7 +108,7 @@ class SysAdmin extends React.Component {
             <DirView path={siteRoot + 'sys/libraries/:repoID/*'} />
             <WebSettings path={siteRoot + 'sys/web-settings'} />
             <Groups path={siteRoot + 'sys/groups'} />
-            <GroupRepos path={siteRoot + 'sys/groups/:groupID/libs'} />
+            <GroupRepos path={siteRoot + 'sys/groups/:groupID/libraries'} />
             <GroupMembers path={siteRoot + 'sys/groups/:groupID/members'} />
             <FileScanRecords
               path={siteRoot + 'sys/file-scan-records'}
