@@ -63,6 +63,55 @@ def get_upload_link_info(uls):
 
     return data
 
+class AdminUploadLinks(APIView):
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAdminUser,)
+    throttle_classes = (UserRateThrottle,)
+
+    def get(self, request):
+        """ Get all upload links.
+
+        Permission checking:
+        1. only admin can perform this action.
+        """
+        try:
+            current_page = int(request.GET.get('page', '1'))
+            per_page = int(request.GET.get('per_page', '100'))
+        except ValueError:
+            current_page = 1
+            per_page = 100
+
+        start = (current_page - 1) * per_page
+        end = current_page * per_page + 1
+
+        upload_links = UploadLinkShare.objects.all().order_by('ctime')[start:end]
+        if len(upload_links) == end - start:
+            upload_links = upload_links[:per_page]
+
+        count = UploadLinkShare.objects.all().count()
+
+        # Use dict to reduce memcache fetch cost in large for-loop.
+        nickname_dict = {}
+        owner_email_set = set([link.username for link in upload_links])
+        for e in owner_email_set:
+            if e not in nickname_dict:
+                nickname_dict[e] = email2nickname(e)
+
+        upload_links_info = []
+        for link in upload_links:
+            link_info = {}
+            link_info['path'] = link.path
+            link_info['token'] = link.token
+
+            owner_email = link.username
+            link_info['creator_email'] = owner_email
+            link_info['creator_name'] = nickname_dict.get(owner_email, '')
+            link_info['ctime'] = datetime_to_isoformat_timestr(link.ctime)
+            link_info['view_cnt'] = link.view_cnt
+            upload_links_info.append(link_info)
+
+        return Response({"upload_link_list": upload_links_info, "count": count})
+
 
 class AdminUploadLink(APIView):
 
@@ -85,6 +134,28 @@ class AdminUploadLink(APIView):
 
         link_info = get_upload_link_info(uploadlink)
         return Response(link_info)
+
+    def delete(self, request, token):
+        """ Delete a upload link.
+
+        Permission checking:
+        1. only admin can perform this action.
+        """
+
+        try:
+            upload_link = UploadLinkShare.objects.get(token=token)
+        except UploadLinkShare.DoesNotExist:
+            error_msg = 'Upload link %s not found.' % token
+            return api_error(status.HTTP_404_NOT_FOUND, error_msg)
+
+        try:
+            upload_link.delete()
+        except Exception as e:
+            logger.error(e)
+            error_msg = 'Internal Server Error'
+            return api_error(status.HTTP_500_INTERNAL_SERVER_ERROR, error_msg)
+        
+        return Response({'success': True})
 
 
 class AdminUploadLinkUpload(APIView):
